@@ -1,15 +1,17 @@
 #!/usr/bin/node
 const $ = window.$;
-$(document).ready(() => {
-    let checked = []
-    if ($('input#checkbox').is(checked)) {
-        checked.fill($(this).data('data-id'))
+$('document').ready(() => {
+  const checkedList = {};
+  $('input[type="checkbox"]').change(() => {
+    if ($(this).is(':checked')) {
+      checkedList[$(this).attr('data-id')] = $(this).attr('data-name');
     } else {
-        delete checked[$(this).data('data-id')];
+      delete checkedList[$(this).attr('data-id')];
     }
-    if (checked.length === 0) {
-        $('div.amenities h4').text('&nbsp');
+    if (Object.values(checkedList).length === 0) {
+      $('div.amenities h4').text('&nbsp;');
     } else {
-        $('div.amenities h4').text(checked.join(', '));
+      $('div.amenities h4').text(Object.values(checkedList).join(', '));
     }
-})
+  });
+});
