@@ -27,7 +27,6 @@ $('document').ready(function () {
     dataType: 'json',
     contentType: 'application/json',
     success: function (data) {
-      console.log(data);
       $.each(data, function (i, v) {
         $(`<article>
         <div class="title_box">
