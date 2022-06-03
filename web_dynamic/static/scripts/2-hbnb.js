@@ -12,7 +12,7 @@ $('document').ready(function () {
     $('div.amenities > h4').text(Object.values(checkedList).join(', '));
   });
 
-  $.getJSON(urlStatus, (data) => {
+  $.getJSON(urlStatus, function (data) {
     if (data.status === 'OK') {
       $('div#api_status').addClass('available');
     } else {
