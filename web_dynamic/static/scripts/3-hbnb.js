@@ -22,11 +22,12 @@ $('document').ready(function () {
 
   $.ajax({
     type: 'POST',
-    url: 'http://0.0.0.0:5001/api/v1/places_search/',
+    url: 'http://localhost:5001/api/v1/places_search/',
     data: '{}',
     dataType: 'json',
     contentType: 'application/json',
     success: function (data) {
+      console.log(data);
       $.each(data, function (i, v) {
         $(`<article>
         <div class="title_box">
