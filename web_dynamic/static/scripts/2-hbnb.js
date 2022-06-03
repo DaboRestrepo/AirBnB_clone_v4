@@ -1,6 +1,6 @@
 $('document').ready(function () {
   const checkedList = {};
-  const urlStatus = 'http://localhost:5001/api/v1/status/';
+  const url = 'http://localhost:5001/api/v1/status/';
 
   $('input[type="checkbox"]').change(function () {
     if ($(this).is(':checked')) {
@@ -12,7 +12,7 @@ $('document').ready(function () {
     $('div.amenities > h4').text(Object.values(checkedList).join(', '));
   });
 
-  $.get(urlStatus, function (data) {
+  $.get(url, function (data) {
     if (data.status === 'OK') {
       $('div#api_status').addClass('available');
     } else {
