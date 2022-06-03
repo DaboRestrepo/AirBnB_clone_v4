@@ -1,17 +1,12 @@
-#!/usr/bin/node
-const $ = window.$;
-$('document').ready(() => {
+$('document').ready(function () {
   const checkedList = {};
-  $('input[type="checkbox"]').change(() => {
+  $('input[type="checkbox"]').change(function () {
     if ($(this).is(':checked')) {
       checkedList[$(this).attr('data-id')] = $(this).attr('data-name');
     } else {
       delete checkedList[$(this).attr('data-id')];
     }
-    if (Object.values(checkedList).length === 0) {
-      $('div.amenities h4').text('&nbsp;');
-    } else {
-      $('div.amenities h4').text(Object.values(checkedList).join(', '));
-    }
+
+    $('div.amenities > h4').text(Object.values(checkedList).join(', '));
   });
 });
