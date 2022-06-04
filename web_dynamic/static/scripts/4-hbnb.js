@@ -50,7 +50,7 @@ $('document').ready(function () {
     $.ajax({
       type: 'POST',
       url: 'http://localhost:5001/api/v1/places_search',
-      data: JSON.stringify({'amenities': Object.keys(checkedList)}),
+      data: JSON.stringify({ amenities: Object.keys(checkedList) }),
       dataType: 'json',
       contentType: 'application/json',
       success: function (data) {
@@ -71,6 +71,6 @@ $('document').ready(function () {
         </article>`).appendTo('.places');
         });
       }
-    })
-  })
+    });
+  });
 });
