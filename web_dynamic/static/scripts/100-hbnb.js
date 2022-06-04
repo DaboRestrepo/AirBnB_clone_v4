@@ -1,7 +1,32 @@
 $('document').ready(function () {
   const checkedList = {};
-  const locationChecked = {};
+  const stateChecked = {};
+  const cityChecked = {};
+  const bothDict = {};
   const urlStatus = 'http://localhost:5001/api/v1/status/';
+  
+  
+  $('.locations .popover h2 input[type="checkbox"]').change(function () {
+    if ($(this).is(':checked')) {
+      stateChecked[$(this).attr('data-id')] = $(this).attr('data-name');
+      bothDict[$(this).attr('data-id')] = $(this).attr('data-name');
+    } else {
+    delete stateChecked[$(this).attr('data-id')];
+    delete bothDict[$(this).attr('data-id')];
+    }
+    $('div.locations > h4').text(Object.values(bothDict).join(', '));
+  });
+
+  $('.locations .popover input[type="checkbox"]').change(function () {
+    if ($(this).is(':checked')) {
+      cityChecked[$(this).attr('data-id')] = $(this).attr('data-name');
+      bothDict[$(this).attr('data-id')] = $(this).attr('data-name');
+    } else {
+    delete cityChecked[$(this).attr('data-id')];
+    delete bothDict[$(this).attr('data-id')];
+    }
+    $('div.locations > h4').text(Object.values(bothDict).join(', '));
+  });
   
   $('.amenities input[type="checkbox"]').change(function () {
     if ($(this).is(':checked')) {
@@ -12,17 +37,6 @@ $('document').ready(function () {
 
     $('div.amenities > h4').text(Object.values(checkedList).join(', '));
   });
-
-  $('.locations input[type="checkbox"]').change(function () {
-    if ($(this).is(':checked')) {
-      locationChecked[$(this).attr('data-id')] = $(this).attr('data-name');
-    } else {
-      delete locationChecked[$(this).attr('data-id')];
-    }
-
-    $('div.locations > h4').text(Object.values(locationChecked).join(', '));
-  });
-
   $.get(urlStatus, function (data) {
     if (data.status === 'OK') {
       $('div#api_status').addClass('available');
@@ -47,7 +61,7 @@ $('document').ready(function () {
         <div class="information">
         <div class="max_guest">${v.max_guest} Guest</div>
         <div class="number_rooms">${v.number_rooms} Bedroom</div>
-                <div class="number_bathrooms">${v.number_bathrooms} Bathroom</div>
+        <div class="number_bathrooms">${v.number_bathrooms} Bathroom</div>
         </div>
               <div class="description">
           ${v.description}
@@ -58,11 +72,10 @@ $('document').ready(function () {
 });
 $('.filters > button').click(function () {
   $('.places > article').remove();
-  const bothDict = Object.assign({}, checkedList, locationChecked);
   $.ajax({
       type: 'POST',
       url: 'http://localhost:5001/api/v1/places_search',
-      data: JSON.stringify({'amenities': Object.keys(bothDict)}),
+      data: JSON.stringify({'amenities': Object.keys(checkedList), 'states': Object.keys(stateChecked), 'cities': Object.keys(cityChecked)}),
       dataType: 'json',
       contentType: 'application/json',
       success: function (data) {
