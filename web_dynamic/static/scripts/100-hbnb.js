@@ -4,15 +4,14 @@ $('document').ready(function () {
   const cityChecked = {};
   const bothDict = {};
   const urlStatus = 'http://localhost:5001/api/v1/status/';
-  
-  
+
   $('.locations .popover h2 input[type="checkbox"]').change(function () {
     if ($(this).is(':checked')) {
       stateChecked[$(this).attr('data-id')] = $(this).attr('data-name');
       bothDict[$(this).attr('data-id')] = $(this).attr('data-name');
     } else {
-    delete stateChecked[$(this).attr('data-id')];
-    delete bothDict[$(this).attr('data-id')];
+      delete stateChecked[$(this).attr('data-id')];
+      delete bothDict[$(this).attr('data-id')];
     }
     $('div.locations > h4').text(Object.values(bothDict).join(', '));
   });
@@ -22,12 +21,12 @@ $('document').ready(function () {
       cityChecked[$(this).attr('data-id')] = $(this).attr('data-name');
       bothDict[$(this).attr('data-id')] = $(this).attr('data-name');
     } else {
-    delete cityChecked[$(this).attr('data-id')];
-    delete bothDict[$(this).attr('data-id')];
+      delete cityChecked[$(this).attr('data-id')];
+      delete bothDict[$(this).attr('data-id')];
     }
     $('div.locations > h4').text(Object.values(bothDict).join(', '));
   });
-  
+
   $('.amenities input[type="checkbox"]').change(function () {
     if ($(this).is(':checked')) {
       checkedList[$(this).attr('data-id')] = $(this).attr('data-name');
@@ -44,7 +43,7 @@ $('document').ready(function () {
       $('div#api_status').removeClass('available');
     }
   });
-  
+
   $.ajax({
     type: 'POST',
     url: 'http://localhost:5001/api/v1/places_search/',
@@ -67,15 +66,15 @@ $('document').ready(function () {
           ${v.description}
           </div>
       </article>`).appendTo('.places');
-    });
-  }
-});
-$('.filters > button').click(function () {
-  $('.places > article').remove();
-  $.ajax({
+      });
+    }
+  });
+  $('.filters > button').click(function () {
+    $('.places > article').remove();
+    $.ajax({
       type: 'POST',
       url: 'http://localhost:5001/api/v1/places_search',
-      data: JSON.stringify({'amenities': Object.keys(checkedList), 'states': Object.keys(stateChecked), 'cities': Object.keys(cityChecked)}),
+      data: JSON.stringify({ amenities: Object.keys(checkedList), states: Object.keys(stateChecked), cities: Object.keys(cityChecked) }),
       dataType: 'json',
       contentType: 'application/json',
       success: function (data) {
@@ -94,9 +93,8 @@ $('.filters > button').click(function () {
             ${v.description}
                 </div>
                 </article>`).appendTo('.places');
-              });
+        });
       }
-    })
-  })
+    });
+  });
 });
-
